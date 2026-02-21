@@ -47,6 +47,9 @@ function attachEventListeners() {
     updateDatasetDescription(datasetSelect.value);
     updateStatistics();
     loadActiveChart();
+    if (window.visualizeGEEDataset) {
+      window.visualizeGEEDataset(datasetSelect.value);
+    }
   });
 
   analysisSelect.addEventListener('change', () => {

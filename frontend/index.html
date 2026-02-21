@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpenLandMap Analytics Platform</title>
+    <script async src="https://code.earthengine.google.com/ee_api_js.js"></script>
     <style>
         * {
             margin: 0;
@@ -476,13 +477,8 @@
                     🗺️ Interactive Map Visualization
                 </div>
                 <div class="card-content">
-                    <div id="map" style="width: 100%; height: 100%; background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%); display: flex; align-items: center; justify-content: center;">
-                        <div class="placeholder">
-                            <div class="placeholder-icon">🗺️</div>
-                            <p>Map integration with Google Earth Engine</p>
-                            <p style="font-size: 11px; opacity: 0.7;">Deploy to GEE Code Editor for live data</p>
-                        </div>
-                    </div>
+                    <div id="map" style="width: 100%; height: 100%;"></div>
+                    <div id="mapStatus" style="position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 10px; border-radius: 5px; font-size: 12px; max-width: 200px;">Loading GEE map...</div>
                 </div>
             </div>
 
@@ -510,6 +506,7 @@
         </div>
     </div>
 
+    <script src="gee-map.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
