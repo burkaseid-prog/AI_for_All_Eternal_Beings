@@ -265,6 +265,25 @@
             min-height: 300px;
         }
 
+        .chart-output {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 13px;
+            color: #1a1a1a;
+        }
+
+        .chart-output-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .chart-output-row:last-child {
+            border-bottom: none;
+        }
+
         canvas {
             max-height: 100%;
         }
@@ -356,6 +375,12 @@
                 <p>Soil & Environmental Analytics</p>
             </div>
 
+            <!-- Backend Status -->
+            <div class="control-group">
+                <label>🔌 Backend Status</label>
+                <div id="backendStatus" class="value-display">Connecting...</div>
+            </div>
+
             <!-- Dataset Selection -->
             <div class="control-group">
                 <label>📊 Dataset</label>
@@ -367,6 +392,7 @@
                     <option>Clay Content</option>
                     <option>Soil Texture</option>
                 </select>
+                <div id="datasetDescription" class="value-display">Dataset metadata will appear once the backend responds.</div>
             </div>
 
             <!-- Year Range -->
@@ -484,61 +510,6 @@
         </div>
     </div>
 
-    <script>
-        // Initialize interactive elements
-        const yearSlider = document.getElementById('yearSlider');
-        const yearValue = document.getElementById('yearValue');
-        const datasetSelect = document.getElementById('datasetSelect');
-        const analysisSelect = document.getElementById('analysisSelect');
-        const regionInfo = document.getElementById('regionInfo');
-        const exportBtn = document.getElementById('exportBtn');
-        const resetBtn = document.getElementById('resetBtn');
-
-        // Update year display
-        yearSlider.addEventListener('input', (e) => {
-            yearValue.textContent = e.target.value;
-        });
-
-        // Export button
-        exportBtn.addEventListener('click', () => {
-            alert('📦 Export functionality ready for GEE deployment\n\nExport formats:\n• GeoTIFF\n• CSV Time Series\n• Google Drive\n• Cloud Storage');
-        });
-
-        // Reset button
-        resetBtn.addEventListener('click', () => {
-            datasetSelect.selectedIndex = 0;
-            analysisSelect.selectedIndex = 0;
-            yearSlider.value = 2020;
-            yearValue.textContent = '2020';
-            regionInfo.textContent = 'Click on map to select region';
-            document.querySelectorAll('.stat-value').forEach(el => el.textContent = '--');
-        });
-
-        // Chart tab switching
-        document.querySelectorAll('.chart-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-            });
-        });
-
-        // Simulate dataset change
-        datasetSelect.addEventListener('change', (e) => {
-            console.log('Dataset changed to:', e.target.value);
-            // In production, this would trigger GEE visualization update
-        });
-
-        analysisSelect.addEventListener('change', (e) => {
-            console.log('Analysis type changed to:', e.target.value);
-            // In production, this would trigger chart generation
-        });
-
-        // Initialize tooltips
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('✓ OpenLandMap Dashboard Initialized');
-            console.log('✓ Ready for GEE integration');
-            console.log('✓ ML modules: Ready for implementation');
-        });
-    </script>
+    <script src="main.js"></script>
 </body>
 </html>

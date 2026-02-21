@@ -16,25 +16,39 @@ A **complete, production-ready platform** for soil and environmental analysis wi
 
 ```
 Your Folder/
-├── index.html                          ← Web Dashboard (Open in browser)
+├── backend/
+│   ├── app.py                          ← FastAPI backend serving datasets & analytics
+│   └── requirements.txt                ← Python dependencies for the API
+├── frontend/
+│   ├── index.html                      ← Browser dashboard (HTML + CSS)
+│   └── main.js                         ← UI logic that calls the Python API
 ├── gee_master_application.js          ← GEE Script (Copy to Code Editor)
 ├── PLATFORM_ARCHITECTURE.md           ← Full Technical Documentation
 ├── ML_IMPLEMENTATION_GUIDE.md         ← Step-by-step ML Implementation
 └── README.md                          ← This file
+
+> Root `index.html` now summarizes how to start the stack and links directly to `frontend/index.html`.
 ```
 
 ---
 
-## 🚀 How to Use (3 Steps)
+## 🚀 How to Use
 
-### Step 1: View the Web Dashboard
+### Step 1: Run the Python backend
 ```
-1. Open: index.html in any web browser
-2. See: Modern, fully responsive interface
-3. Note: This is the UI template - ready for GEE backend integration
+1. Install dependencies: `pip install -r backend/requirements.txt`
+2. Start the API: `uvicorn backend.app:app --reload --host 127.0.0.1 --port 8000`
+3. Leave the endpoint running at http://localhost:8000 while you explore the UI.
 ```
 
-### Step 2: Deploy to Google Earth Engine (LIVE DATA)
+### Step 2: Serve & explore the dashboard
+```
+1. From the root directory run `cd frontend && python -m http.server 5173` (or use your preferred static server).
+2. Open http://localhost:5173/index.html in the browser – the dashboard will fetch metadata and analytics from the Python backend.
+3. Use the controls to change datasets, years, and analysis types; the charts and stats now come from the API.
+```
+
+### Step 3: Deploy to Google Earth Engine (LIVE DATA)
 ```
 1. Go to: https://code.earthengine.google.com
 2. Create: New script
@@ -43,7 +57,7 @@ Your Folder/
 5. Interact: Select datasets, visualize maps, compute statistics
 ```
 
-### Step 3: Implement ML (When Ready)
+### Step 4: Implement ML (When Ready)
 ```
 1. Read: ML_IMPLEMENTATION_GUIDE.md
 2. Follow: 4-week implementation roadmap
@@ -130,13 +144,25 @@ All from **OpenLandMap** (https://openlandmap.org/):
 ## 🔧 Technical Stack
 
 ```
-Frontend:        HTML5, CSS3, Vanilla JavaScript
-Backend:         Google Earth Engine (JavaScript API)
-Cloud Platform:  Google Cloud (GEE)
+Frontend:        HTML5, CSS3, Vanilla JavaScript (fetch + placeholder charts)
+Backend:         Python FastAPI (serves metadata, stats, placeholder analytics)
+Cloud Platform:  Local Python service for rapid prototyping
 ML Framework:    TensorFlow, scikit-learn, SciPy
 Data Format:     GeoTIFF, CSV, TFRecord
-Deployment:      Web + GEE Code Editor
+Deployment:      Static site + FastAPI backend
 ```
+
+## 🧠 Backend API
+
+| Endpoint | Purpose |
+|----------|---------|
+| `/api/status` | Health check used by the dashboard to verify the Python service is online. |
+| `/api/datasets` | Returns dataset metadata (name, asset path, units, visualization parameters). |
+| `/api/statistics` | Accepts dataset, lat/lon and returns mean, min, max, and standard deviation. |
+| `/api/analysis/time-series` | Generates synthetic year/value pairs used by the time series tab. |
+| `/api/analysis/change-detection` | Reports before/after statistics plus delta for the selected year window. |
+| `/api/analysis/correlation` | Returns placeholder correlation scores for climate and land cover drivers. |
+| `/api/analysis/forecast` | Emits a 5‑year forecast series that the frontend displays in the ML Forecast tab. |
 
 ---
 
